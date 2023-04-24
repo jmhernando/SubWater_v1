@@ -1,4 +1,5 @@
 /**
+HARDWARE
 ____________________
 MULTIPLEXOR
 Vin -> 5V
@@ -30,25 +31,34 @@ SCL -> SCL (Multiplexor)
 #include <Wire.h>     //Sirve para comunicarse con dispositivos que usan el protocolo de comunicación 12C (con reloj)
 #include <Adafruit_SSD1306.h> //Para el control de pantallas OLED.
 
-#define PCA9548A_ADDRESS 0x70
-#define CHANNEL_0 0
-#define CHANNEL_1 1
 
-#define OLED_WIDTH 128
-#define OLED_HEIGHT 32
-#define OLED_RESET -1
+//Las direcciones definidas tanto del multiplexor como de la pantalla OLED serán representadas en hexadecimal para no poner directamente en binario el número.
+
+#define PCA9548A_ADDRESS 0x70   //Constante que define la dirección del multiplexor.
+#define CHANNEL_0 0             //Canal para el dispositivo MPU6050.
+#define CHANNEL_1 1             //Canal para el dispositivo Pantalla OLED.
+
+#define OLED_WIDTH 128          //Define el ancho de la pantalla OLED (En pixeles)
+#define OLED_HEIGHT 32          //Define el alto de la pantalla OLED (En pixeles)
+#define OLED_RESET -1           //Define el valor del pin RESET de la pantalla OLED.
+
+//Función que sirve para crear un objeto de la clase Adafruit. Los parámetros que pasa son (ancho, alto, puntero a objeto wire, pin reseteo)
+//&Wire es un puntero que apunta al objeto wire. Se usa para inicializar la comunicación con la pantalla OLED.
+//Como no tenemos botón de reset el valor será -1.
 Adafruit_SSD1306 display(OLED_WIDTH, OLED_HEIGHT, &Wire, OLED_RESET);
  
-// Pantalla OLED con dirección TWI
-#define OLED_ADDR 0x3C
-const int mpuAddress = 0x68;  // Puede ser 0x68 o 0x69
-MPU6050 mpu(mpuAddress);
+#define OLED_ADDR 0x3C            //Constante que define la dirección de la pantalla OLED
+const int mpuAddress = 0x68;      //Puede ser 0x68 o 0x69. Constante que define la dirección del sensor (Acelerómetro y giroscopio)
+MPU6050 mpu(mpuAddress);          //Creación del objeto sensor.
 
+
+//Variables de apoyo que usaremos a lo largo del programa.
 int ax, ay, az;
 int gx, gy, gz;
-int i=0;
 
-Servo servoMotor;
+int i=0; //Variable temporal para el funcionamiento del servomotor.
+
+Servo servoMotor;   //Creamos el objeto servomotor.
 
 /**
 __________________________
@@ -98,7 +108,7 @@ Relacionado con el texto
   Wire.write(1 << CHANNEL_0); // Selecciona el canal 0 del multiplexor
   Wire.endTransmission();
 
-  mpu.initialize();
+  mpu.initialize(); //Establece la comunicación con el dispositivo. Debe ser llamado antes de usar cualquier otra función de la clase mpu.
   Serial.println(mpu.testConnection() ? F("IMU iniciado correctamente") : F("Error al iniciar IMU"));
 }
 
@@ -111,7 +121,7 @@ void loop() {
   // Leer las aceleraciones
   mpu.getAcceleration(&ax, &ay, &az);
 
-  //Calcular los angulos de inclinacion
+  //Calcular los angulos de inclinacion con trigonometría.
   float accel_ang_x = atan(ax / sqrt(pow(ay, 2) + pow(az, 2))) * (180.0 / 3.14);
   float accel_ang_y = atan(ay / sqrt(pow(ax, 2) + pow(az, 2))) * (180.0 / 3.14);
 
@@ -137,16 +147,12 @@ void loop() {
   }
 
   if (millis() - lastMillis >= 1000) {
-    int humedad = analogRead(sensorPin);
-    if(humedad<500) exit(0);
-    else{
-      Serial.println(humedad);
-      lastMillis = millis(); // Reiniciamos el tiempo de referencia
-    }
+    sensorHumedad();
+    
   }
 }
 
-void moverServo1(bool tiempo){
+void moverServo1(){
   switch(i){
     case 0: 
       // Desplazamos a la posición 0º
@@ -168,5 +174,18 @@ void moverServo1(bool tiempo){
     Serial.println("180");
     i=0;
     break;
+  }
+}
+
+void sensorHumedad(){
+  int humedad = analogRead(sensorPin);  
+
+   /*Si se cumple esta condición quiere decir que el interior del submarino tiene mas humedad de la deseada
+    y se abortará el programa para proteger los componentes electrónicos.*/
+    // TODO: Implementar función de envío de error y encendido de LED de emergencia. 
+  if(humedad<500) exit(0);           
+  else{
+    Serial.println(humedad);
+    lastMillis = millis(); // Reiniciamos el tiempo de referencia
   }
 }
