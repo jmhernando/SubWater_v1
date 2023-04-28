@@ -13,9 +13,13 @@ En el código y en esta misma memoria serán aplicadas nomenclaturas tales que: 
 
 *TODO LIST*
 -[x] Creación del repositorio en GitHub.
+
 -[x] Uso de control de versiones con Git.
+
 -[ ] Mejorar el README.
+
 -[x] Empezar a subir código.
+
 -[ ] Crear una lista ordenada con columnas `TODO`, `DOING`, `DONE`.
 
 
