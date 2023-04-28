@@ -148,7 +148,6 @@ void loop() {
 
   if (millis() - lastMillis >= 1000) {
     sensorHumedad();
-    
   }
 }
 
@@ -179,7 +178,6 @@ void moverServo1(){
 
 void sensorHumedad(){
   int humedad = analogRead(sensorPin);  
-
    /*Si se cumple esta condición quiere decir que el interior del submarino tiene mas humedad de la deseada
     y se abortará el programa para proteger los componentes electrónicos.*/
     // TODO: Implementar función de envío de error y encendido de LED de emergencia. 
