@@ -12,15 +12,16 @@ Proyecto personal del desarrollo de un submarino funcional. Su funcionamiento se
 En el código y en esta misma memoria serán aplicadas nomenclaturas tales que: `TODO` para cosas que faltan por hacer, `DOING` para código que actualmente está en desarrollo y `DONE` para código que ya está terminado.
 
 *TODO LIST*
--[x] Creación del repositorio en GitHub.
 
--[x] Uso de control de versiones con Git.
+- [x] Creación del repositorio en GitHub.
 
--[ ] Mejorar el README.
+- [x] Uso de control de versiones con Git.
 
--[x] Empezar a subir código.
+- [ ] Mejorar el README.
 
--[ ] Crear una lista ordenada con columnas `TODO`, `DOING`, `DONE`.
+- [x] Empezar a subir código.
+
+- [ ] Crear una lista ordenada con columnas `TODO`, `DOING`, `DONE`.
 
 
 
