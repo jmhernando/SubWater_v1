@@ -23,6 +23,10 @@ En el código y en esta misma memoria serán aplicadas nomenclaturas tales que: 
 
 - [ ] Crear una lista ordenada con columnas `TODO`, `DOING`, `DONE`.
 
+- [ ] Añadir sensores de luz.
+
+- [ ] Añadir LEDs.
+
 
 
 - README realizado por la ayuda de [Manual de sintaxis de GitHub](https://docs.github.com/es/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
