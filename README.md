@@ -27,6 +27,7 @@ En el código y en esta misma memoria serán aplicadas nomenclaturas tales que: 
 
 - [ ] Añadir LEDs.
 
+- [ ] En principio se usará Blender para desarrollar el esqueleto del submarino.
 
 
 - README realizado por la ayuda de [Manual de sintaxis de GitHub](https://docs.github.com/es/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
